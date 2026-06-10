@@ -3,7 +3,7 @@ import { RlpUintLike } from "@/libs/rlp/uint/mod.ts";
 import { Readable, Writable } from "@hazae41/binary";
 import { Rlp, RlpItem, RlpList } from "@hazae41/rlp";
 
-export interface UnsignedTransactionInit {
+export interface EIP155UnsignedTransactionInit {
   readonly nonce: RlpUintLike
 
   readonly gasPrice: RlpUintLike
@@ -16,7 +16,7 @@ export interface UnsignedTransactionInit {
   readonly chainId: RlpUintLike
 }
 
-export class UnsignedTransaction {
+export class EIP155UnsignedTransaction {
 
   constructor(
     readonly nonce: RlpUintLike,
@@ -28,12 +28,12 @@ export class UnsignedTransaction {
     readonly chainId: RlpUintLike,
   ) { }
 
-  static from(init: UnsignedTransactionInit): UnsignedTransaction {
+  static from(init: EIP155UnsignedTransactionInit): EIP155UnsignedTransaction {
     const { nonce, gasPrice, startGas, to, value, data, chainId } = init
-    return new UnsignedTransaction(nonce, gasPrice, startGas, to, value, data, chainId)
+    return new EIP155UnsignedTransaction(nonce, gasPrice, startGas, to, value, data, chainId)
   }
 
-  static decode(bytes: Uint8Array): UnsignedTransaction {
+  static decode(bytes: Uint8Array): EIP155UnsignedTransaction {
     const list = RlpList.as(Readable.readFromBytes(Rlp, bytes))
 
     const nonce = RlpUintLike.from(RlpItem.as(list.value[0]))
@@ -47,7 +47,7 @@ export class UnsignedTransaction {
 
     const chainId = RlpUintLike.from(RlpItem.as(list.value[6]))
 
-    return new UnsignedTransaction(nonce, gasPrice, startGas, to, value, data, chainId)
+    return new EIP155UnsignedTransaction(nonce, gasPrice, startGas, to, value, data, chainId)
   }
 
   encode(): Uint8Array {
@@ -70,19 +70,19 @@ export class UnsignedTransaction {
     return Writable.writeToBytes(list)
   }
 
-  sign(signature: Uint8Array): SignedTransaction {
+  sign(signature: Uint8Array): EIP155SignedTransaction {
     const { nonce, gasPrice, startGas, to, value, data, chainId } = this
 
     const r = signature.slice(0, 32)
     const s = signature.slice(32, 64)
     const v = BigInt(chainId) * 2n + 35n + BigInt(signature[64] % 2)
 
-    return new SignedTransaction(nonce, gasPrice, startGas, to, value, data, v, r, s)
+    return new EIP155SignedTransaction(nonce, gasPrice, startGas, to, value, data, v, r, s)
   }
 
 }
 
-export interface SignedTransactionInit {
+export interface EIP155SignedTransactionInit {
   readonly nonce: RlpUintLike
 
   readonly gasPrice: RlpUintLike
@@ -97,7 +97,7 @@ export interface SignedTransactionInit {
   readonly s: RlpDataLike
 }
 
-export class SignedTransaction {
+export class EIP155SignedTransaction {
 
   constructor(
     readonly nonce: RlpUintLike,
@@ -111,12 +111,12 @@ export class SignedTransaction {
     readonly s: RlpDataLike,
   ) { }
 
-  static from(init: SignedTransactionInit): SignedTransaction {
+  static from(init: EIP155SignedTransactionInit): EIP155SignedTransaction {
     const { nonce, gasPrice, startGas, to, value, data, v, r, s } = init
-    return new SignedTransaction(nonce, gasPrice, startGas, to, value, data, v, r, s)
+    return new EIP155SignedTransaction(nonce, gasPrice, startGas, to, value, data, v, r, s)
   }
 
-  static decode(bytes: Uint8Array): SignedTransaction {
+  static decode(bytes: Uint8Array): EIP155SignedTransaction {
     const list = RlpList.as(Readable.readFromBytes(Rlp, bytes))
 
     const nonce = RlpUintLike.from(RlpItem.as(list.value[0]))
@@ -132,7 +132,7 @@ export class SignedTransaction {
     const r = RlpDataLike.from(RlpItem.as(list.value[7]))
     const s = RlpDataLike.from(RlpItem.as(list.value[8]))
 
-    return new SignedTransaction(nonce, gasPrice, startGas, to, value, data, v, r, s)
+    return new EIP155SignedTransaction(nonce, gasPrice, startGas, to, value, data, v, r, s)
   }
 
   encode(): Uint8Array {
@@ -154,12 +154,12 @@ export class SignedTransaction {
     return Writable.writeToBytes(list)
   }
 
-  unsign(): UnsignedTransaction {
+  unsign(): EIP155UnsignedTransaction {
     const { nonce, gasPrice, startGas, to, value, data, v } = this
 
     const chainId = (BigInt(v) - 35n) / 2n
 
-    return new UnsignedTransaction(nonce, gasPrice, startGas, to, value, data, chainId)
+    return new EIP155UnsignedTransaction(nonce, gasPrice, startGas, to, value, data, chainId)
   }
 
 }
