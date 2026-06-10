@@ -1,6 +1,6 @@
 # EIP-155
 
-EIP-155 encoding for the web
+EIP-155 transactions for the web
 
 ```bash
 npm install @hazae41/eip155

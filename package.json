@@ -2,7 +2,7 @@
   "type": "module",
   "name": "@hazae41/eip155",
   "version": "1.0.0",
-  "description": "EIP-155 encoding for the web",
+  "description": "EIP-155 transactions for the web",
   "repository": "github:hazae41/eip155",
   "author": "hazae41",
   "scripts": {
