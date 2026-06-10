@@ -1,4 +1,5 @@
-import { RlpDataLike, RlpUintLike } from "@/libs/rlp/mod.ts";
+import { RlpDataLike } from "@/libs/rlp/data/mod.ts";
+import { RlpUintLike } from "@/libs/rlp/uint/mod.ts";
 import { Readable, Writable } from "@hazae41/binary";
 import { Rlp, RlpItem, RlpList } from "@hazae41/rlp";
 
