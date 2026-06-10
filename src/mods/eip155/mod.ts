@@ -82,7 +82,7 @@ export class UnsignedTransaction {
 
 }
 
-export interface SignedTransactionInit0 {
+export interface SignedTransactionInit {
   readonly nonce: RlpUintLike
 
   readonly gasPrice: RlpUintLike
@@ -111,7 +111,7 @@ export class SignedTransaction {
     readonly s: RlpDataLike,
   ) { }
 
-  static from(init: SignedTransactionInit0): SignedTransaction {
+  static from(init: SignedTransactionInit): SignedTransaction {
     const { nonce, gasPrice, startGas, to, value, data, v, r, s } = init
     return new SignedTransaction(nonce, gasPrice, startGas, to, value, data, v, r, s)
   }
