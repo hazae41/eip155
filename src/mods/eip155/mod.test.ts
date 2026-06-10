@@ -8,8 +8,7 @@ test("eip155", () => {
   console.log(stx)
 
   const raw = stx.encode()
-
-  console.log(raw)
+  console.log(raw.toHex())
 
   const stx2 = EIP155SignedTransaction.decode(raw)
   const utx2 = stx2.unsign()
