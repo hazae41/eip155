@@ -1,7 +1,7 @@
 {
   "type": "module",
   "name": "@hazae41/eip155",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "EIP-155 encoding for the web",
   "repository": "github:hazae41/eip155",
   "author": "hazae41",
