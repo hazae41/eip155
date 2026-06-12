@@ -1,4 +1,4 @@
-# EIP-155
+# EIP-155: Simple replay attack protection
 
 EIP-155 transactions for the web
 
